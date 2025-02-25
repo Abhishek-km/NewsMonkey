@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import NewsItem from "./NewsItem";
-
-export default class News extends Component {
-    articles = [
+{
+    "status": "ok",
+    "totalResults": 6469,
+    "articles": [
     {
     "source": {
     "id": null,
@@ -1265,31 +1264,4 @@ export default class News extends Component {
     "content": "Tesla, Baidu, and Rivian Automotive are the three Electric Vehicle stocks to watch today, according to MarketBeat’s stock screener tool. These companies had the highest dollar trading volume of any E… [+3322 chars]"
     }
     ]
-    constructor() {
-        super();
-        this.state = {
-          articles: this.articles,
-          loading: false,
-        };
-      }
-
-  render() {
-    return (
-      <div className="container my-3">
-        <h1>NewsMonkey - Top Headlines</h1>
-        <div className="row">
-        {this.state.articles.map((element) => {
-          return <div className="col-md-4" key={element.url}>
-            <NewsItem
-              title={element.title != null ? element.title.slice(0, 30): ""}
-              description={element.description !=null?element.description.slice(0, 50): ""}
-              imgUrl={element.urlToImage}
-              newsUrl = {element.url}
-            />
-          </div>
-          })}
-        </div>
-      </div>
-    );
-  }
-}
+    }
