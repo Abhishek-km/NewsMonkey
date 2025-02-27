@@ -9,6 +9,7 @@ export default class News extends Component {
       articles: [],
       loading: false,
       page: 1,
+      totalResults: 0,
     };
   }
 
@@ -18,10 +19,15 @@ export default class News extends Component {
       "https://newsapi.org/v2/top-headlines?country=us&apiKey=e8d30d9cddd24e7fa9a3f1864d991e13";
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({ articles: parsedData.articles });
+    this.setState({
+      articles: parsedData.articles,
+      totalResults: parsedData.totalResults,
+    });
   }
 
   handleNextClick = async () => {
+    if (this.state.page + 1 > Math.ceil(this.state.totalResults / 20)) {
+    } else {
       this.setState({ page: this.state.page + 1 });
       let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=e8d30d9cddd24e7fa9a3f1864d991e13&page=${
         this.state.page + 1
@@ -29,6 +35,7 @@ export default class News extends Component {
       let data = await fetch(url);
       let parsedData = await data.json();
       this.setState({ articles: parsedData.articles });
+    }
   };
 
   handlePrevClick = async () => {
@@ -44,7 +51,7 @@ export default class News extends Component {
   render() {
     return (
       <div className="container my-3">
-        <h1>NewsMonkey - Top Headlines</h1>
+        <h1 className="text-center">NewsMonkey - Top Headlines</h1>
         <div className="row">
           {this.state.articles.map((element) => {
             return (
@@ -72,6 +79,9 @@ export default class News extends Component {
             type="button"
             class="btn btn-dark"
             onClick={this.handleNextClick}
+            disabled={
+              this.state.page + 1 > Math.ceil(this.state.totalResults / 20)
+            }
           >
             Next &rarr;
           </button>
