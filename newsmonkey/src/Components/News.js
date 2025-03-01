@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import PropTypes, { element } from "prop-types";
 import Spinner from "./Spinner";
+import { render } from "react-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default class News extends Component {
   constructor(props) {
@@ -38,25 +40,44 @@ export default class News extends Component {
     });
   };
 
-  handleNextClick = async () => {
-    let pageNo = this.state.page;
-    this.setState({ page: pageNo + 1 });
-    this.updateNews();
-  };
+  // handleNextClick = async () => {
+  //   let pageNo = this.state.page;
+  //   this.setState({ page: pageNo + 1 });
+  //   this.updateNews();
+  // };
 
-  handlePrevClick = async () => {
-    this.setState({ page: this.state.page - 1 });
-    this.updateNews();
-  };
+  // handlePrevClick = async () => {
+  //   this.setState({ page: this.state.page - 1 });
+  //   this.updateNews();
+  // };
+
+  fetchMoreData = async () => {
+    this.setState({ page: this.state.page + 1 });
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=e8d30d9cddd24e7fa9a3f1864d991e13&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      articles: this.state.articles.concat(parsedData.articles),
+      totalResults: parsedData.totalResults,
+      loading: false,
+    });
+  }
 
   render() {
     return (
-      <div className="container my-3">
-        <h1 className="text-center">
+      <>
+        <h1 className="text-center my-4">
           NewsMonkey - Top Headlines on{" "}
           {this.capitalizeFirstLetter(this.props.category)}
         </h1>
         {this.state.loading && <Spinner />}
+        <InfiniteScroll
+          dataLength={this.state.articles.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.articles.length <= this.state.totalResults}
+          loader={<Spinner />}
+        >
+          <div className="container">
         <div className="row">
           {this.state.articles.map((element) => {
             return (
@@ -73,8 +94,10 @@ export default class News extends Component {
               </div>
             );
           })}
+          </div>
         </div>
-        <div className="container d-flex justify-content-between">
+        </InfiniteScroll>
+        {/* <div className="container d-flex justify-content-between">
           <button
             type="button"
             className="btn btn-dark"
@@ -94,8 +117,8 @@ export default class News extends Component {
           >
             Next &rarr;
           </button>
-        </div>
-      </div>
+        </div> */}
+  </>
     );
   }
 }
