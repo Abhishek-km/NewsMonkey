@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from './Components/NavBar';
 import News from './Components/News';
-import Spinner from './Components/Spinner';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default class App extends Component {
