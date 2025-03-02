@@ -39,8 +39,9 @@ export default class News extends Component {
   };
 
   fetchMoreData = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+    // updating the page number after using it as the function is working as asyn so the page no is incremented after the url is made. Happen sometime.
     this.setState({ page: this.state.page + 1 });
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
@@ -53,7 +54,7 @@ export default class News extends Component {
   render() {
     return (
       <>
-        <h1 className="text-center my-4">
+        <h1 className="text-center" style={{ margin: "35px", marginTop: "90px" }}>
           NewsMonkey - Top Headlines on {this.capitalizeFirstLetter(this.props.category)}
         </h1>
         <InfiniteScroll
@@ -64,9 +65,9 @@ export default class News extends Component {
         >
           <div className="container">
             <div className="row">
-              {this.state.articles && this.state.articles.map((element) => {
+              {this.state.articles && this.state.articles.map((element, index) => {
                 return (
-                  <div className="col-md-4" key={element.url}>
+                  <div className="col-md-4" key={`${element.url}-${index}`}>
                     <NewsItem
                       title={element.title}
                       description={element.description}

@@ -7,12 +7,19 @@ export default class NavBar extends Component {
     prop: PropTypes,
   };
 
+  handleNavItemClick = () => {
+    const navbarCollapse = document.getElementById("navbarSupportedContent");
+    if (navbarCollapse.classList.contains("show")) {
+      navbarCollapse.classList.remove("show");
+    }
+  };
+
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
-            <Link className="navbar-brand" to="/">
+            <Link className="navbar-brand" to="/"  onClick={this.handleNavItemClick}>
               NewsMonkey
             </Link>
             <button
@@ -32,42 +39,42 @@ export default class NavBar extends Component {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/about">
+                  <Link className="nav-link" to="/about" onClick={this.handleNavItemClick}>
                     About
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/business">
+                  <Link className="nav-link" to="/business" onClick={this.handleNavItemClick}>
                     Business
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/entertainment">
+                  <Link className="nav-link" to="/entertainment" onClick={this.handleNavItemClick}>
                     Entertainment
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/general">
+                  <Link className="nav-link" to="/general" onClick={this.handleNavItemClick}>
                     General
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/health">
+                  <Link className="nav-link" to="/health" onClick={this.handleNavItemClick}>
                     Health
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/science">
+                  <Link className="nav-link" to="/science" onClick={this.handleNavItemClick}>
                     Science
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/sports">
+                  <Link className="nav-link" to="/sports" onClick={this.handleNavItemClick}>
                     Sports
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/technology">
+                  <Link className="nav-link" to="/technology" onClick={this.handleNavItemClick}>
                     Technology
                   </Link>
                 </li>
